@@ -1,0 +1,25 @@
+@startuml
+
+entity Customer {
+  CustomerID : int <<PK>>
+  FirstName : string
+  LastName : string
+  Email : string
+  Phone : string
+  Address : string
+}
+
+entity Booking {
+  BookingID : int <<PK>>
+  CustomerID : int <<FK>>
+  RoomID : int <<FK>>
+  BookingDate : date
+  CheckInDate : date
+  CheckOutDate : date
+  TotalAmount : decimal
+}
+
+Customer "1" -- "0..*" Booking : "places"
+Booking "1" -- "1" Room : "includes"
+Room "1" -- "1" RoomType : "is of type"
+@enduml
