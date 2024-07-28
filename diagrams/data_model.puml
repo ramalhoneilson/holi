@@ -1,25 +1,62 @@
 @startuml
 
-entity Customer {
-  CustomerID : int <<PK>>
-  FirstName : string
-  LastName : string
-  Email : string
-  Phone : string
-  Address : string
+entity customer{
+  customer_id : int <<PK>>
+  first_name : string
+  last_name : string
+  email : string
+  phone : string
+  address : string
 }
 
-entity Booking {
-  BookingID : int <<PK>>
-  CustomerID : int <<FK>>
-  RoomID : int <<FK>>
-  BookingDate : date
-  CheckInDate : date
-  CheckOutDate : date
-  TotalAmount : decimal
+entity booking {
+  booking_id : int <<PK>>
+  customer_id : int <<FK>>
+  room_id : int <<FK>>
+  booking_date : date
+  checking_date : date
+  checkout_date : date
+  total_amount : decimal
 }
 
-Customer "1" -- "0..*" Booking : "places"
-Booking "1" -- "1" Room : "includes"
-Room "1" -- "1" RoomType : "is of type"
+entity property{
+  property_id: int <<PK>>
+  property_name: string
+  property_description: string
+  property_type_id: int <<FK>>
+  owner_id: string
+  price_per_night: decimal
+  number_of_rooms: int
+}
+
+entity property_type{
+  property_type_id: int <<PK>>
+  property_type_name: string
+  property_type_description: string
+}
+
+entity amenity{
+  amenity_id: int <<PK>>
+  ameniny_name: string
+  ameniny_description
+}
+
+entity property_amenity{
+  property_id: int 
+  amenity_id: int
+}
+
+entity Payment{
+  payment_id: int <<PK>>
+  booking_id: int <<FK>>
+  payment_date: date
+  payment_amount: decimal
+  payment_method: string
+}
+
+customer "1" -- "0..*" booking : "places"
+booking "0..*" -- "1..*" property : "includes"
+property "1" -- "0..*" property_amenity : "has"
+property "1"-- "1" property_type: "is type of"
+
 @enduml
